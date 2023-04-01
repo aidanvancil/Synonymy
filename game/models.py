@@ -15,3 +15,11 @@ class Guess(models.Model):
 
     class Meta:
         ordering = ['-similarity']
+
+class Hint(models.Model):
+    word = models.CharField(max_length=100)
+    similarity = models.FloatField()
+    definition = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        ordering = ['-word']

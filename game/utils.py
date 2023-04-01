@@ -2,6 +2,7 @@ import random
 from datetime import datetime, timedelta
 from django.core.cache import cache
 from .models import Word
+from nltk.wsd import lesk
 import nltk
 
 def loadWords():
@@ -27,30 +28,10 @@ def getWord():
     return word
 
 def cor(guess, answer):
-    guess_tokens = nltk.word_tokenize(guess.lower())
-    answer_tokens = nltk.word_tokenize(answer.lower())
-    guess_pos = nltk.pos_tag(guess_tokens)
-    answer_pos = nltk.pos_tag(answer_tokens)
-    try:
-        guess_lemmas = [nltk.WordNetLemmatizer().lemmatize(t[0], pos=t[1][0].lower()) for t in guess_pos]
-        answer_lemmas = [nltk.WordNetLemmatizer().lemmatize(t[0], pos=t[1][0].lower()) for t in answer_pos]
-    except KeyError:
-        guess_lemmas = [nltk.WordNetLemmatizer().lemmatize(t[0]) for t in guess_pos]
-        answer_lemmas = [nltk.WordNetLemmatizer().lemmatize(t[0]) for t in answer_pos]
-    guess_synsets = []
-    for l in guess_lemmas:
-        synsets = nltk.corpus.wordnet.synsets(l)
-        if synsets:
-            guess_synsets.append(synsets[0])
-
-    answer_synsets = []
-    for l in answer_lemmas:
-        synsets = nltk.corpus.wordnet.synsets(l)
-        if synsets:
-            answer_synsets.append(synsets[0])
-    sim_score = 0
-    if guess_synsets and answer_synsets:
-        sim_scores = [s1.path_similarity(s2) for s1 in guess_synsets for s2 in answer_synsets]
-        sim_score = sum(sim_scores) / len(sim_scores)
-        return [round(sim_score, 3), answer_synsets[0].definition().capitalize()]
-    return [round(sim_score, 3), None]
+    guess_synset = lesk(guess, guess)
+    answer_synset = lesk(answer, answer)
+    if not guess_synset:
+        return [0, 0]
+    sim_score = (guess_synset.wup_similarity(answer_synset))
+    
+    return [round(sim_score, 3), answer_synset.definition().capitalize()]

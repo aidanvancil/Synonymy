@@ -36,7 +36,7 @@
     <h2>Hints:</h2>
     <ul>
         {% for hint in hints %}
-            <li>{{ hint }}</li>
+            <li>{{ hint.word }} ({{ hint.similarity }}): {{ hint.definition }}</li>
         {% endfor %}
     </ul>
   {% endif %}
