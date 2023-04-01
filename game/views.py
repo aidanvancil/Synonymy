@@ -9,8 +9,9 @@ class GameView(View):
     def get(self, request):
         # Get the most recent word from the database
         word = getWord()
+        guesses = Guess.objects.filter(word=word)
         form = GuessForm()
-        return render(request, 'game.html', {'word': word, 'form': form})
+        return render(request, 'game.html', {'word': word, 'form': form, 'guesses': guesses})
 
     def post(self, request):
         # Get the most recent word from the database
@@ -22,15 +23,26 @@ class GameView(View):
             error_message = "No words found in the database. Please add some words before playing the game."
             return render(request, 'game.html', {'error_message': error_message})
 
+        print(guess)
+        if guess and guess not in [w.word for w in Word.objects.all()]:
+            error_message = "This word cannot be found."
+            guesses = Guess.objects.filter(word=word)
+            form = GuessForm()
+            return render(request, 'game.html', {'word': word, 'form': form, 'guesses': guesses, 'error_message': error_message})
+        else:
+            error_message = "This word has already been guessed."
+            guesses = Guess.objects.filter(word=word)
+            for obj in guesses:
+                if obj.guess == guess:
+                    form = GuessForm()
+                    return render(request, 'game.html', {'word': word, 'form': form, 'guesses': guesses, 'error_message': error_message})
 
         similarity = cor(guess, word.word) if guess else None
-
-        # Save the user's guess and confidence score to the database
+        
         Guess.objects.create(
             word=word,
             guess=guess,
             similarity=similarity
         )
 
-        # Redirect to the same page to display the result
-        return redirect(reverse('game'))
+        return redirect(reverse(''))

@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Guess the Word</h1>
-<p>{{ word.word }}</p>
+<h1>Synonymy</h1>
+<p>This is the word of the day: {{ word.word }}</p>
 <form method="post">
   {% csrf_token %}
   {% if error_message %}
@@ -13,5 +13,13 @@
   <button type="submit">Submit</button>
 </form>
 
-<p>The most recent word is: <strong>{{ word.word }}</strong></p>
+{% if guesses %}
+  <h2>Guesses:</h2>
+  <ul>
+      {% for guess in guesses %}
+          <li>{{ guess.guess }} ({{ guess.similarity }})</li>
+      {% endfor %}
+  </ul>
+{% endif %}
+
 {% endblock %}

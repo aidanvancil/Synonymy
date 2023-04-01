@@ -19,5 +19,5 @@ from game.views import GameView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', GameView.as_view(), name='Synonymy')
+    path('', GameView.as_view(), name='')
 ]
