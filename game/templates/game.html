@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Guess the Word</h1>
+<p>{{ word.word }}</p>
+<form method="post">
+  {% csrf_token %}
+  {% if error_message %}
+    <div class="alert alert-danger">{{ error_message }}</div>
+  {% endif %}
+  <label for="guess">Your guess:</label>
+  <input type="text" name="guess" id="guess" required>
+  <button type="submit">Submit</button>
+</form>
+
+<p>The most recent word is: <strong>{{ word.word }}</strong></p>
+{% endblock %}
