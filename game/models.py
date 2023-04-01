@@ -10,6 +10,7 @@ class Guess(models.Model):
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
     guess = models.CharField(max_length=100)
     similarity = models.FloatField()
+    definition = models.CharField(max_length=255, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from game.views import GameView
+from game.utils import loadWords
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -3,7 +3,7 @@ import json
 
 directory = '.'
 
-filenames = ['nounlist.txt'] # Add more here if neccessary.
+filenames = ['massivelist.txt'] # Add more here if neccessary.
 
 words = []
 for filename in filenames:
