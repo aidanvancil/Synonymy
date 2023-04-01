@@ -4,34 +4,52 @@
 
 {% block content %}
   <h1>Synonymy</h1>
-  {{ word.word }}
-  <form method="post">
-    {% csrf_token %}
-    {% if error_message %}
-      <div class="alert alert-danger">{{ error_message }}</div>
-    {% endif %}
-    <label for="guess">Your guess:</label>
-    <input type="text" name="guess" id="guess" required autofocus>
-    <button type="submit">Submit</button>
-  </form>
+  <h2>A semantic-based word guessing game</h2>
+  <h3>Guess todays secret word!</h3>
+  <div class="GuessForm">
+    <form method="post">
+      {% csrf_token %}
+      <label for="guess">Your guess:</label>
+      <input type="text" name="guess" id="guess" required autofocus>
+      <button type="submit">Submit</button>
+    </form>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="hint" id="hint">Hint</button>
+    </form>
+  </div>
 
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit" name="hint" id="hint">Hint</button>
-  </form>
+  {% if error_message %}
+        <div class="alert alert-danger err">{{ error_message }}</div>
+  {% endif %}
+  
 
   {% if guesses %}
-    <h2>Guesses:</h2>
-    <ul>
+    <table class = "main_table">
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Guess</th>
+          <th>Similarity</th>
+          <th>How Close?</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for guess in guesses %}
-            <li>{{ guess.guess }} ({{ guess.similarity}})
-              {% if guess.definition %} 
-                <b>Definition: </b> {{ guess.definition }} 
-              {% endif %}
-            </li>
+          <tr>
+            <td>num</td>
+            <td>{{ guess.guess }}</td>
+            <td>{{ guess.similarity}}</td>
+            <td>close</td>
+            {% if guess.definition %} 
+                <td>Definition: {{ guess.definition }} </td> 
+            {% endif %}
+          </tr>
         {% endfor %}
-    </ul>
+      </tbody>
+    </table>
   {% endif %}
+
   {% if hints %}
     <h2>Hints:</h2>
     <ul>

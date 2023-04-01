@@ -30,7 +30,7 @@ def getWord():
 def cor(guess, answer):
     guess_synset = lesk(guess, guess)
     answer_synset = lesk(answer, answer)
-    if not guess_synset:
+    if not guess_synset or not answer_synset:
         return [0, 0]
     sim_score = (guess_synset.wup_similarity(answer_synset))
     
