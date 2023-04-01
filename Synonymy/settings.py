@@ -24,6 +24,9 @@ SECRET_KEY = 'django-insecure-+srolb#^03-^(8y)^3c%#_9q&c&y4+c(2cwlmuz747_e^d4(k*
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+STATICFILES_DIRS = [
+    'game/static',
+]
 
 ALLOWED_HOSTS = []
 
