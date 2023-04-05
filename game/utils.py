@@ -19,6 +19,8 @@ def getWord():
     # If the word for today is not in the cache, select a new random word from the database
     words = Word.objects.all()
     word = random.choice(words)
+    while word not in frozenset(nltk.corpus.words.words()):
+        word = random.choice(words)
 
     # Store the selected word in the cache with an expiration time set to the end of the day
     tomorrow = today + timedelta(days=1)
