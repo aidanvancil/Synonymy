@@ -15,7 +15,7 @@
     </form>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" name="hint" id="hint">Hint</button>
+        <button type="submit" name="hint" id="hint" >Hint</button>
     </form>
   </div>
 
@@ -37,10 +37,24 @@
       <tbody>
         {% for guess in guesses %}
           <tr>
-            <td>num</td>
+            <td>{{ forloop.counter }}</td>
             <td>{{ guess.guess }}</td>
             <td>{{ guess.similarity}}</td>
-            <td>close</td>
+            <td>
+              {% if guess.similarity >= 1 %}
+                🔥🔥🔥
+              {% elif guess.similarity >= 0.8 %}
+                🔥🔥
+              {% elif guess.similarity >= 0.6 %}
+                🔥
+              {% elif guess.similarity >= 0.4 %}
+                ❄️
+              {% elif guess.similarity >= 0.2 %}
+                ❄️❄️
+              {% else %}
+                ❄️❄️❄️
+              {% endif %}
+            </td>
             {% if guess.definition %} 
                 <td>Definition: {{ guess.definition }} </td> 
             {% endif %}
@@ -52,10 +66,8 @@
 
   {% if hints %}
     <h2>Hints:</h2>
-    <ul>
         {% for hint in hints %}
-            <li>{{ hint.word }} ({{ hint.similarity }}): {{ hint.definition }}</li>
+            <p>{{ hint.word }} ({{ hint.similarity }}): {{ hint.definition }}<p>
         {% endfor %}
-    </ul>
   {% endif %}
 {% endblock %}

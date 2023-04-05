@@ -65,6 +65,16 @@ th::after {
   background-color: black;
 }
 
-.main_table {
+button {
+    background: none;   
+    font: inherit;
+}
 
+input#guess {
+    font: inherit;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+button#hint:hover, button#guess:hover {
+    font-weight: bold;
 }
