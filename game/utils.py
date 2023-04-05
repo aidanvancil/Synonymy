@@ -20,7 +20,8 @@ def getWord():
     words = Word.objects.all()
     used_words = cache.get('usedWords', set())
     word = random.choice(words)
-    while word in used_words or word not in frozenset(nltk.corpus.words.words()):
+    english_set = frozenset(nltk.corpus.words.words())
+    while word in used_words or len(word.word) > 9 or word.word not in english_set:
         word = random.choice(words)
 
     # Store the selected word in the cache with an expiration time set to the end of the day
