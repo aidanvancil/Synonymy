@@ -18,15 +18,17 @@ def getWord():
 
     # If the word for today is not in the cache, select a new random word from the database
     words = Word.objects.all()
+    used_words = cache.get('usedWords', set())
     word = random.choice(words)
-    while word not in frozenset(nltk.corpus.words.words()):
+    while word in used_words or word not in frozenset(nltk.corpus.words.words()):
         word = random.choice(words)
 
     # Store the selected word in the cache with an expiration time set to the end of the day
     tomorrow = today + timedelta(days=1)
     end_of_day = datetime.combine(tomorrow, datetime.min.time())
     cache.set(f'getWord{today}', word, (end_of_day - datetime.now()).seconds)
-
+    used_words.add(word.word)
+    cache.set('usedWords', used_words)
     return word
 
 def cor(guess, answer):
