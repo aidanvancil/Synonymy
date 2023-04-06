@@ -1,0 +1,85 @@
+body {
+    font-family: 'Secular One', sans-serif;
+    text-align: center;
+    background-color: dimgray;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 60px;
+    margin-bottom: -10px;
+}
+
+h2 {
+    opacity: 80%;
+}
+
+h3 {
+    opacity: 80%;
+}
+
+.GuessForm {
+	display: inline-flex;
+    margin-bottom: 5vh;
+}
+
+.err {
+    padding: 3vh 0vh;
+}
+
+@media (max-width: 500px) {
+  body {
+    top: 20px;
+    left: 20px;
+  }
+  
+  h1, h2, h3 {
+    size: 10%;
+    left: 20px;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  width: 60%;
+  margin: 0 auto;
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  font-weight: bold;
+  position: relative;
+}
+
+th::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  width: calc(100% - 16px);
+  background-color: black;
+}
+
+button {
+    background: none;   
+    font: inherit;
+}
+
+input#guess {
+    font: inherit;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+button#hint:hover, button#guess:hover {
+    font-weight: bold;
+}
+
+span {
+    text-decoration: underline;
+}
