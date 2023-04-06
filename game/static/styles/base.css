@@ -1,7 +1,8 @@
 body {
     font-family: 'Secular One', sans-serif;
     text-align: center;
-    background-color: gray;
+    background-color: dimgray;
+    overflow: hidden;
 }
 
 h1 {
@@ -77,4 +78,8 @@ input#guess {
 
 button#hint:hover, button#guess:hover {
     font-weight: bold;
+}
+
+span {
+    text-decoration: underline;
 }

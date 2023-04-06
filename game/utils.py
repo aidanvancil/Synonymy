@@ -1,9 +1,14 @@
 import random
 from datetime import datetime, timedelta
 from django.core.cache import cache
-from .models import Word
+from .models import Word, Hint
 from nltk.wsd import lesk
+from nltk.corpus import wordnet as wn
 import nltk
+import gensim.downloader as api
+import math
+
+model = api.load("glove-twitter-25")
 
 def loadWords():
     WORDS = [w.word for w in Word.objects.all()]
@@ -32,11 +37,28 @@ def getWord():
     cache.set('usedWords', used_words)
     return word
 
-def cor(guess, answer):
-    guess_synset = lesk(guess, guess)
-    answer_synset = lesk(answer, answer)
-    if not guess_synset or not answer_synset:
-        return [0, 0]
-    sim_score = (guess_synset.wup_similarity(answer_synset))
-    
-    return [round(sim_score, 3), answer_synset.definition().capitalize()]
+def correlation(guess, answer):
+    answer_synset = wn.synsets(answer)
+    cosine_distance = model.similarity(guess, answer)
+    cosine_distance = float(cosine_distance)
+    try: 
+        if not answer_synset[0]:
+            return [round(cosine_distance, 3), None]
+    except IndexError:
+        return [round(cosine_distance, 3), "No definition"]
+    return [round(cosine_distance, 3), answer_synset[0].definition().capitalize()]
+
+def getRelevantWords(answer):
+    similar_words = model.most_similar(answer, topn=15)
+    for word, sim in similar_words:
+        sim_score, definition = correlation(answer, word)
+        if Hint.objects.count() > 3:
+            break
+        if definition is None or definition is "No definition":
+            continue
+        Hint.objects.create(
+            word=word.title(),
+            similarity=sim_score,
+            definition=definition,
+        )
+    return

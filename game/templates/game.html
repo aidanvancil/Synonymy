@@ -22,7 +22,17 @@
   {% if error_message %}
         <div class="alert alert-danger err">{{ error_message }}</div>
   {% endif %}
-  
+
+  {% if guesses %}
+    {% for guess in guesses %}
+      {% if guess.similarity == 1 and forloop.counter == 1%}
+        <div>
+          <h3>Congrats! The word today was: <span>{{ word.word }}</span>.</h3>
+          <p> Feel free to continue guessing to see different similarity scores for today!</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 
   {% if guesses %}
     <table class = "main_table">
