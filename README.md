@@ -41,6 +41,3 @@ This project is a game where the user has to guess a word based on the semantic-
 - Add additional difficulty levels with harder definitions.
 - Allow users to submit their own definitions and words for the game.
 
-## Testing
-
-- See link...
