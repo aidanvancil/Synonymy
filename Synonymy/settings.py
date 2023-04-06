@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+srolb#^03-^(8y)^3c%#_9q&c&y4+c(2cwlmuz747_e^d4(k*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 STATICFILES_DIRS = [
     'game/static',
 ]
