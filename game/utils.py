@@ -54,7 +54,7 @@ def getRelevantWords(answer):
         sim_score, definition = correlation(answer, word)
         if Hint.objects.count() > 3:
             break
-        if definition is None or definition is "No definition":
+        if definition is None or definition == "No definition":
             continue
         Hint.objects.create(
             word=word.title(),

@@ -20,10 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+srolb#^03-^(8y)^3c%#_9q&c&y4+c(2cwlmuz747_e^d4(k*'
+import os
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-+srolb#^03-^(8y)^3c%#_9q&c&y4+c(2cwlmuz747_e^d4(k*')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+#DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+
+
 STATICFILES_DIRS = [
     'game/static',
 ]

@@ -1,2 +1,3 @@
 nltk
-django-admin
+django
+gensim
