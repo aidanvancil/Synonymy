@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a game where the user has to guess a word based on the semantic-similarity of guesses that they put into the program.
+This project is a game where the user has to guess a word based on the semantic-similarity of their guesses.
 ![hotstreak](https://user-images.githubusercontent.com/42700427/230251342-5cd18544-3a99-4373-a20e-5462a4012085.jpg)
 
 ## Technologies Used
